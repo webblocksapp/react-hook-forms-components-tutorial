@@ -1,3 +1,9 @@
+import { TextInput } from '@components';
+
 export const App: React.FC = () => {
-  return <>Hello world!</>;
+  return (
+    <>
+      Hello world! <TextInput />
+    </>
+  );
 };
