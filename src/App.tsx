@@ -1,9 +1,9 @@
-import { TextInput } from '@components';
+import { Button } from '@components';
 
 export const App: React.FC = () => {
   return (
     <>
-      Hello world! <TextInput />
+      Hello world! <Button />
     </>
   );
 };
