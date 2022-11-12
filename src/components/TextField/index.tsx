@@ -23,28 +23,47 @@ export const TextField: React.FC<TextFieldProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [value, setValue] = useState<unknown>('');
 
+  /**
+   * Extends the onChange method by adding the react hook forms controller onChange method.
+   */
   const onChange: TextFieldProps['onChange'] = (event) => {
     controller?.field?.onChange(event);
     rest?.onChange?.(event);
   };
 
+  /**
+   * Extends the onBlur method by adding the react hook forms controller onBlur method.
+   */
   const onBlur: TextFieldProps['onBlur'] = (event) => {
     controller?.field?.onBlur();
     rest?.onBlur?.(event);
   };
 
+  /**
+   * Computed error flag from react hook forms controller or error prop.
+   */
   useEffect(() => {
     setError(Boolean(controller?.fieldState?.error?.message) || rest.error || false);
   }, [controller?.fieldState?.error?.message, rest.error]);
 
+  /**
+   * Computed error message from react hook forms controller or error message prop.
+   */
   useEffect(() => {
     setErrorMessage(controller?.fieldState?.error?.message || errorMessageProp || '');
   }, [controller?.fieldState?.error?.message, errorMessageProp]);
 
+  /**
+   * Computed value message from react hook form.
+   */
   useEffect(() => {
     setValue(controller?.field?.value);
   }, [controller?.field?.value]);
 
+  /**
+   * Computed value message from value prop given.
+   * If we have a controller initialized, the value acts as a default value of the controller.
+   */
   useEffect(() => {
     setValue(rest.value);
   }, [rest.value]);

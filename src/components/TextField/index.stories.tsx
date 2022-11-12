@@ -2,6 +2,7 @@ import { TextField } from '@components';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 
 type Schema = { name: string };
 
@@ -14,8 +15,8 @@ export default {
   component: TextField,
 };
 
-export const Primary = () => {
-  const { control } = useForm<Schema>({
+export const WithReactHookForm = () => {
+  const { control, watch } = useForm<Schema>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
@@ -23,32 +24,36 @@ export const Primary = () => {
   return (
     <>
       <div>
-        <TextField
-          label="Name"
-          name="name"
-          control={control}
-          onChange={() => {
-            console.log('hello world');
-          }}
-          onBlur={() => {
-            console.log('hello world on blur');
-          }}
-          value="Hello"
-          helperText="You can write a name on any language"
-        />
+        <TextField label="Name" name="name" control={control} value="John" />
       </div>
-      <br />
+      <div>
+        <pre>
+          <code>{JSON.stringify(watch(), null, 2)}</code>
+        </pre>
+      </div>
+    </>
+  );
+};
+
+export const WithoutReactHookForm = () => {
+  const [data, setData] = useState({ name: '' });
+
+  return (
+    <>
       <div>
         <TextField
           label="Any Field"
-          onChange={() => {
-            console.log('hello world');
+          name="name"
+          onChange={(event) => {
+            setData((prev) => ({ ...prev, [event.target.name]: event.target.value }));
           }}
-          onBlur={() => {
-            console.log('hello world on blur');
-          }}
-          value="xxxxx"
+          value={data.name}
         />
+      </div>
+      <div>
+        <pre>
+          <code>{JSON.stringify(data, null, 2)}</code>
+        </pre>
       </div>
     </>
   );
