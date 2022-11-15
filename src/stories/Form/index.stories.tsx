@@ -31,7 +31,10 @@ export const ResetAndFill = () => {
     reset();
   };
 
-  const fill = () => {};
+  const fill = () => {
+    const apiResponse = { name: 'John', age: 19 };
+    resetForm(apiResponse);
+  };
 
   const reset = () => {
     resetForm();
