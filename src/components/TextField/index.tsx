@@ -70,7 +70,13 @@ export const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <>
-      <MuiTextField {...rest} onChange={onChange} onBlur={onBlur} value={value} error={error} />
+      <MuiTextField
+        {...rest}
+        onChange={onChange}
+        onBlur={onBlur}
+        value={value || ''}
+        error={error}
+      />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormHelperText error={error}>{errorMessage}</FormHelperText>}
     </>

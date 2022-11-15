@@ -15,18 +15,26 @@ const schema1: yup.SchemaOf<Schema1> = yup.object({
 });
 
 export const ResetAndFill = () => {
-  const { control, handleSubmit } = useForm<Schema1>({
+  const {
+    control,
+    handleSubmit,
+    reset: resetForm,
+    watch,
+  } = useForm<Schema1>({
     resolver: yupResolver(schema1),
     mode: 'all',
   });
 
   const submit = (data: Schema1) => {
     alert(JSON.stringify(data));
+    reset();
   };
 
   const fill = () => {};
 
-  const reset = () => {};
+  const reset = () => {
+    resetForm();
+  };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
@@ -45,6 +53,9 @@ export const ResetAndFill = () => {
           </Button>
         </Stack>
       </Stack>
+      <pre>
+        <code>{JSON.stringify(watch(), null, 2)}</code>
+      </pre>
     </form>
   );
 };
