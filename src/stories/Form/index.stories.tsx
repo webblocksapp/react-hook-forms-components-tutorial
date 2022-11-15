@@ -23,6 +23,7 @@ export const ResetAndFill = () => {
   } = useForm<Schema1>({
     resolver: yupResolver(schema1),
     mode: 'all',
+    defaultValues: { name: 'Test', age: 22 },
   });
 
   const submit = (data: Schema1) => {

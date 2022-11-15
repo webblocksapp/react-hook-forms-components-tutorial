@@ -54,29 +54,15 @@ export const TextField: React.FC<TextFieldProps> = ({
   }, [controller?.fieldState?.error?.message, errorMessageProp]);
 
   /**
-   * Computed value message from react hook form.
+   * Computed value from react hook form or value prop.
    */
   useEffect(() => {
-    setValue(controller?.field?.value);
-  }, [controller?.field?.value]);
-
-  /**
-   * Computed value message from value prop given.
-   * If we have a controller initialized, the value acts as a default value of the controller.
-   */
-  useEffect(() => {
-    setValue(rest.value);
-  }, [rest.value]);
+    setValue(controller?.field?.value ?? (rest.value || ''));
+  }, [controller?.field?.value, rest.value]);
 
   return (
     <>
-      <MuiTextField
-        {...rest}
-        onChange={onChange}
-        onBlur={onBlur}
-        value={value || ''}
-        error={error}
-      />
+      <MuiTextField {...rest} onChange={onChange} onBlur={onBlur} value={value} error={error} />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormHelperText error={error}>{errorMessage}</FormHelperText>}
     </>
