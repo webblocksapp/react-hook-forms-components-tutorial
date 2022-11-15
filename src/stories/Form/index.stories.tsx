@@ -10,8 +10,8 @@ export default {
 type Schema1 = { name: string; age: number };
 
 const schema1: yup.SchemaOf<Schema1> = yup.object({
-  name: yup.string().required(),
-  age: yup.number().required(),
+  name: yup.string().required().default(''),
+  age: yup.number().required().default(0),
 });
 
 export const ResetAndFill = () => {
@@ -23,7 +23,7 @@ export const ResetAndFill = () => {
   } = useForm<Schema1>({
     resolver: yupResolver(schema1),
     mode: 'all',
-    defaultValues: { name: 'Test', age: 22 },
+    defaultValues: schema1.getDefaultFromShape(),
   });
 
   const submit = (data: Schema1) => {
@@ -37,7 +37,7 @@ export const ResetAndFill = () => {
   };
 
   const reset = () => {
-    resetForm();
+    resetForm(schema1.getDefaultFromShape());
   };
 
   return (
