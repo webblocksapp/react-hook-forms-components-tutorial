@@ -1,6 +1,7 @@
 import { Button, TextField, Stack } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from '@utils';
+import { useEffect } from 'react';
 import * as yup from 'yup';
 
 export default {
@@ -15,17 +16,18 @@ const schema1: yup.SchemaOf<Schema1> = yup.object({
 });
 
 export const ResetAndFill = () => {
-  const { control, handleSubmit, reset, watch } = useForm<Schema1>(schema1);
+  const { control, handleSubmit, reset, fill, watch } = useForm<Schema1>(schema1);
 
   const submit = (data: Schema1) => {
     alert(JSON.stringify(data));
     reset();
   };
 
-  const fill = () => {
-    const apiResponse = { name: 'John', age: 19 };
-    // resetForm(apiResponse);
-  };
+  useEffect(() => {
+    //Done an api call before
+    const response = { name: 'John', age: 20 };
+    fill(response);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(submit)}>
@@ -36,7 +38,7 @@ export const ResetAndFill = () => {
           <Button variant="contained" type="submit">
             Submit
           </Button>
-          <Button variant="contained" onClick={fill}>
+          <Button variant="contained" onClick={() => fill({ name: 'sdasddsa', age: 12321321 })}>
             Fill
           </Button>
           <Button variant="contained" onClick={() => reset()}>
