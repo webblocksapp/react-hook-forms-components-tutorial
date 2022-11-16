@@ -15,7 +15,7 @@ const schema1: yup.SchemaOf<Schema1> = yup.object({
 });
 
 export const ResetAndFill = () => {
-  const { control, handleSubmit, reset: resetForm, watch } = useForm<Schema1>(schema1);
+  const { control, handleSubmit, reset, watch } = useForm<Schema1>(schema1);
 
   const submit = (data: Schema1) => {
     alert(JSON.stringify(data));
@@ -24,11 +24,7 @@ export const ResetAndFill = () => {
 
   const fill = () => {
     const apiResponse = { name: 'John', age: 19 };
-    resetForm(apiResponse);
-  };
-
-  const reset = () => {
-    resetForm(schema1.getDefaultFromShape());
+    // resetForm(apiResponse);
   };
 
   return (
@@ -43,7 +39,7 @@ export const ResetAndFill = () => {
           <Button variant="contained" onClick={fill}>
             Fill
           </Button>
-          <Button variant="contained" onClick={reset}>
+          <Button variant="contained" onClick={() => reset()}>
             Reset
           </Button>
         </Stack>
