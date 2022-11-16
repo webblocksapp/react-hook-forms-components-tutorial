@@ -1,6 +1,6 @@
 import { Button, TextField, Stack } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { useForm } from '@utils';
 import * as yup from 'yup';
 
 export default {
@@ -15,16 +15,7 @@ const schema1: yup.SchemaOf<Schema1> = yup.object({
 });
 
 export const ResetAndFill = () => {
-  const {
-    control,
-    handleSubmit,
-    reset: resetForm,
-    watch,
-  } = useForm<Schema1>({
-    resolver: yupResolver(schema1),
-    mode: 'all',
-    defaultValues: schema1.getDefaultFromShape(),
-  });
+  const { control, handleSubmit, reset: resetForm, watch } = useForm<Schema1>(schema1);
 
   const submit = (data: Schema1) => {
     alert(JSON.stringify(data));
