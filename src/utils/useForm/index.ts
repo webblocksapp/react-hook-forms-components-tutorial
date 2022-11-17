@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo } from 'react';
 import {
   useForm as useBaseForm,
   UseFormProps,
@@ -18,19 +19,20 @@ export const useForm = <TFieldValues extends FieldValues = FieldValues, TContext
   schema: yup.AnyObjectSchema,
   props?: Omit<UseFormProps<TFieldValues, TContext>, 'resolver' | 'defaultValues'>
 ): Omit<UseFormReturn<TFieldValues, TContext>, 'reset'> & UseFormReturnOverrides<TFieldValues> => {
+  const defaultValues = useMemo(() => schema.getDefault(), [schema]);
   const form = useBaseForm({
     mode: 'all',
     resolver: yupResolver(schema),
-    defaultValues: schema.getDefault(),
+    defaultValues,
     ...props,
   });
 
   const reset = (options?: ResetOptions) => {
-    form.reset(schema.getDefaultFromShape(), options);
+    form.reset(defaultValues, options);
   };
 
-  const fill: UseFormReset<TFieldValues> = (...args) => {
-    form.reset(...args);
+  const fill: UseFormReset<TFieldValues> = (values, keepStateOptions) => {
+    form.reset({ ...defaultValues, ...values }, keepStateOptions);
   };
 
   return { ...form, reset, fill };
