@@ -1,4 +1,4 @@
-import { MenuItem, Select } from '@components';
+import { MenuItem, Select, Stack } from '@components';
 import { useForm } from '@utils';
 import * as yup from 'yup';
 
@@ -18,24 +18,20 @@ export const WithReactHookForm = () => {
   const { control, watch } = useForm<Schema1>(schema1);
 
   return (
-    <>
-      <div>
-        <Select control={control} name="size">
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-        </Select>
-      </div>
-      <div>
-        <Select multiple control={control} name="sizes">
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-        </Select>
-      </div>
+    <Stack spacing={5}>
+      <Select label="Size" helperText="Size helper text" control={control} name="size">
+        <MenuItem value={10}>10</MenuItem>
+        <MenuItem value={20}>20</MenuItem>
+      </Select>
+      <Select label="Sizes" multiple control={control} name="sizes">
+        <MenuItem value={10}>10</MenuItem>
+        <MenuItem value={20}>20</MenuItem>
+      </Select>
       <div>
         <pre>
           <code>{JSON.stringify(watch(), null, 2)}</code>
         </pre>
       </div>
-    </>
+    </Stack>
   );
 };

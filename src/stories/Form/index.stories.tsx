@@ -1,4 +1,4 @@
-import { Button, TextField, Stack, Select, MenuItem } from '@components';
+import { Button, TextField, Stack, Select, MenuItem, Box } from '@components';
 import { useForm } from '@utils';
 import { useEffect } from 'react';
 import * as yup from 'yup';
@@ -26,41 +26,43 @@ export const ResetAndFill = () => {
 
   useEffect(() => {
     //Done an api call before
-    const response = { name: 'John', age: 20 };
+    const response = { name: 'John', age: 20, size: 10, sizes: [10, 20] };
     fill(response);
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
-      <Stack spacing={2}>
-        <TextField label="Name" name="name" control={control} />
-        <TextField label="Age" name="age" control={control} />
-        <Select control={control} name="size">
-          <MenuItem value={10}>10 Pixels</MenuItem>
-          <MenuItem value={20}>20 Pixels</MenuItem>
-        </Select>
-        <Select multiple control={control} name="sizes">
-          <MenuItem value={10}>10 Pixels</MenuItem>
-          <MenuItem value={20}>20 Pixels</MenuItem>
-        </Select>
-        <Stack direction="row" spacing={2}>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => fill({ name: 'sdasddsa', age: 12321321, size: 10, sizes: [10, 20] })}
-          >
-            Fill
-          </Button>
-          <Button variant="contained" onClick={() => reset()}>
-            Reset
-          </Button>
+    <Box border={2} borderColor="gray" maxWidth={'400px'} width="100%" padding={2}>
+      <form onSubmit={handleSubmit(submit)}>
+        <Stack spacing={2}>
+          <TextField label="Name" name="name" control={control} />
+          <TextField label="Age" name="age" control={control} />
+          <Select label="Size" control={control} name="size">
+            <MenuItem value={10}>10 Pixels</MenuItem>
+            <MenuItem value={20}>20 Pixels</MenuItem>
+          </Select>
+          <Select label="Sizes" multiple control={control} name="sizes">
+            <MenuItem value={10}>10 Pixels</MenuItem>
+            <MenuItem value={20}>20 Pixels</MenuItem>
+          </Select>
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => fill({ name: 'sdasddsa', age: 12321321, size: 10, sizes: [10, 20] })}
+            >
+              Fill
+            </Button>
+            <Button variant="contained" onClick={() => reset()}>
+              Reset
+            </Button>
+          </Stack>
         </Stack>
-      </Stack>
-      <pre>
-        <code>{JSON.stringify(watch(), null, 2)}</code>
-      </pre>
-    </form>
+        <pre>
+          <code>{JSON.stringify(watch(), null, 2)}</code>
+        </pre>
+      </form>
+    </Box>
   );
 };

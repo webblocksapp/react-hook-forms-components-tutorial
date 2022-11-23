@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Select as MuiSelect, SelectProps as MuiSelectProps } from '@mui/material';
 import { Control, useController } from 'react-hook-form';
-import { FormHelperText } from '@components';
+import { Box, FormControl, FormHelperText, InputLabel } from '@components';
 
 export type SelectProps = MuiSelectProps & {
   control?: Control<any>;
@@ -66,10 +66,17 @@ export const Select: React.FC<SelectProps> = ({
   }, [controller?.field?.value, rest.value]);
 
   return (
-    <>
-      <MuiSelect {...rest} onChange={onChange} onBlur={onBlur} value={value} error={error} />
+    <Box>
+      <FormControl fullWidth={rest.fullWidth}>
+        <InputLabel>{rest.label}</InputLabel>
+        <MuiSelect {...rest} onChange={onChange} onBlur={onBlur} value={value} error={error} />
+      </FormControl>
+
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormHelperText error={error}>{errorMessage}</FormHelperText>}
-    </>
+    </Box>
   );
+};
+Select.defaultProps = {
+  fullWidth: true,
 };

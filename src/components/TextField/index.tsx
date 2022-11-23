@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
 import { Control, useController } from 'react-hook-form';
-import { FormHelperText } from '@components';
+import { Box, FormHelperText } from '@components';
 
 export type TextFieldProps = MuiTextFieldProps & { control?: Control<any>; errorMessage?: string };
 
@@ -61,10 +61,13 @@ export const TextField: React.FC<TextFieldProps> = ({
   }, [controller?.field?.value, rest.value]);
 
   return (
-    <>
+    <Box>
       <MuiTextField {...rest} onChange={onChange} onBlur={onBlur} value={value} error={error} />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {error && <FormHelperText error={error}>{errorMessage}</FormHelperText>}
-    </>
+    </Box>
   );
+};
+TextField.defaultProps = {
+  fullWidth: true,
 };
